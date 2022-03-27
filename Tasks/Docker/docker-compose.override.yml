@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  thockykeeb:
+    build:
+      context: .
+      dockerfile: ThockyKeeb/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80 # sa kojih lokacija neko sme da pogodi server.
+      - CONN_STRING=Data Source=db;Initial Catalog=thockykeeb;User Id=root;password=;port=3306
+    ports:
+      - 9092:443
+      - 9093:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

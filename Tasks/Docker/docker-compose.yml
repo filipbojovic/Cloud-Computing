@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  db:
+    container_name: mysqlDB
+    image: mysql:latest
+    ports:
+      - "9091:3306"
+    volumes:
+      - ./MySQLData:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=True
+  thockykeeb:
+    image: filipbojovic/thockykeeb:1.0.0
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - CONN_STRING=Data Source=db;Initial Catalog=thockykeeb;User Id=root;password=;port=3306
+    ports:
+      - 9093:80
