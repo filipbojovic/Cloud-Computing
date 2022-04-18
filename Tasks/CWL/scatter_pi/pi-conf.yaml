@@ -1,0 +1,12 @@
+nazivSkripte:
+  class: File
+  path: run.sh
+programskiKod:
+  class: File
+  path: pi.c
+programskiKodZavrsni: # kod koji sakuplja sve podatke
+  class: File
+  path: calculatePi.c
+seeds: [1, 2, 3, 4]
+brojUzoraka: 1000000
+niz: [1, 2, 3, 4]

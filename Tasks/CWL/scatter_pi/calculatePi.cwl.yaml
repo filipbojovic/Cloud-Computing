@@ -1,0 +1,26 @@
+cwlVersion: v1.0
+class: CommandLineTool
+baseCommand: bash
+
+inputs: # definisemo ulazne parametre u cwl
+  nazivSkripte:
+    type: File
+    inputBinding:
+      position: 1 # jer je na prvoj poziciji
+  programskiKodZavrsni:
+    type: File
+    inputBinding:
+      position: 2
+  brojUzoraka:
+    type: int
+    inputBinding:
+      position: 3
+  niz: # ovo su izlazi iz programa pi.cwl
+    type: int[]
+    inputBinding:
+      position: 4
+outputs:
+  izlaz_zavrsni:
+    type: stdout # saljemo na stdout, pa redirektujemo u fajl
+stdout: izlaz.txt
+

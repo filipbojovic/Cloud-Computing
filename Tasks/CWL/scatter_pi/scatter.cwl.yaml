@@ -1,0 +1,35 @@
+cwlVersion: v1.0
+class: Workflow
+
+requirements:
+  ScatterFeatureRequirement: {}
+
+inputs:
+  seeds: int[]
+  nazivSkripte: File
+  programskiKod: File
+  programskiKodZavrsni: File
+  brojUzoraka: int
+
+steps:
+  pi: # korak da se izracuna pi
+    run: pi.cwl.yaml # pokrecemo cwl koji pokrece racunanje broja pi
+    scatter: seed # scattrer se radi po seedu, ovaj seed ce da dobija vrednost seeds-a
+    in: # ulazi za posao 'pi'
+      seed: seeds
+      nazivSkripte: nazivSkripte
+      programskiKod: programskiKod
+      brojUzoraka: brojUzoraka
+    out: [izlaz] # izlaz ce biti niz posto je ovaj posao definisan kao scatter.
+  izracunajPi:
+    run: calculatePi.cwl.yaml
+    in:
+      niz: pi/izlaz
+      nazivSkripte: nazivSkripte
+      programskiKodZavrsni: programskiKodZavrsni
+      brojUzoraka: brojUzoraka
+    out: [izlaz_zavrsni]
+outputs:
+  izlaz_kraj:
+    type: File
+    outputSource: izracunajPi/izlaz_zavrsni
