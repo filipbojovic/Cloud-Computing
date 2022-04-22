@@ -1,0 +1,30 @@
+{
+    "metrics_output": {
+        "location": "file:///home/fika/Desktop/git/Cloud-Computing/Tasks/CWL/homework/rezultati.txt",
+        "basename": "rezultati.txt",
+        "class": "File",
+        "checksum": "sha1$bd78cc6ffe02756994d725f72422758761051184",
+        "size": 20,
+        "path": "/home/fika/Desktop/git/Cloud-Computing/Tasks/CWL/homework/rezultati.txt"
+    }
+}
+{
+    "metrics_output": {
+        "location": "file:///home/fika/Desktop/git/Cloud-Computing/Tasks/CWL/homework/rezultati.txt",
+        "basename": "rezultati.txt",
+        "class": "File",
+        "checksum": "sha1$fab502b635448dc17b2988e9c6f0eb5cee562446",
+        "size": 27,
+        "path": "/home/fika/Desktop/git/Cloud-Computing/Tasks/CWL/homework/rezultati.txt"
+    }
+}
+{
+    "metrics_output": {
+        "location": "file:///home/fika/Desktop/git/Cloud-Computing/Tasks/CWL/homework/rezultati.txt",
+        "basename": "rezultati.txt",
+        "class": "File",
+        "checksum": "sha1$bd78cc6ffe02756994d725f72422758761051184",
+        "size": 20,
+        "path": "/home/fika/Desktop/git/Cloud-Computing/Tasks/CWL/homework/rezultati.txt"
+    }
+}

@@ -1,0 +1,36 @@
+cwlVersion: v1.0
+class: Workflow
+
+requirements:
+  ScatterFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+
+inputs:
+  k_array: int[]
+  k: int
+  dataset: File
+  python_file: File
+  num_of_epochs: int
+  collect_file: File
+
+steps:
+  train_network: # korak da se trenira mreza za dato k
+    run: network.cwl.yaml # pokrecemo cwl koji pokrecenje treniranje mreze
+    scatter: current_k # scattrer se radi po k, vrednost k uzima vrednost iz k_array
+    in: # ulazi za posao 'network.cwl.yaml'
+      current_k: k_array # uzima se 1 po 1 vrednost iz k_array
+      python_file: python_file
+      dataset: dataset
+      num_of_epochs: num_of_epochs
+      k: k
+    out: [network_output] # izlaz ce biti niz, izlaz za svako k. izlaz mora da se zove isto kao i u network.cwl.yaml
+  gather_results:
+    run: collect.cwl.yaml
+    in:
+      python_file: collect_file
+      array_of_outputs: train_network/network_output
+    out: [metrics_output]
+outputs:
+  final_metrics_output: # naziv outputa scatter-a
+    type: File
+    outputSource: gather_results/metrics_output # njegov output je output nekog njegovog posla
