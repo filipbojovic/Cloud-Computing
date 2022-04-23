@@ -1,35 +1,31 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ["python", "/app/network.py"]
+baseCommand: python
 
 hints:
   DockerRequirement:
-    dockerPull: filipbojovic/kfolds_cwl:latest
+    dockerPull: filipbojovic/kfold_cwl:latest
 inputs: # ulazi za ovaj cwl
+  python_file:
+    type: File
+    inputBinding:
+      position: 1
   k:
     type: int
     inputBinding:
-      position: 1
+      position: 2
   current_k:
     type: int
     inputBinding:
-      position: 2
+      position: 3
+  dataset:
+    type: File
+    inputBinding:
+      position: 4
   num_of_epochs:
     type: int
     inputBinding:
-      position: 3
-  batch_size:
-    type: int
-    inputBinding:
-      position: 4
-  optimizer:
-    type: string
-    inputBinding:
       position: 5
-  hidden_layers:
-    type: int
-    inputBinding:
-      position: 6
 stdout: output.txt # prosledi printf u output.txt unutar dockera.
 outputs:
   network_output: # izlaz iz ovog cwl-a se zove ovako

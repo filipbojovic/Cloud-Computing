@@ -2,13 +2,20 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ["python", "/collectApp/collect_results.py"]
+baseCommand: python
+
+requirements:
+  SubworkflowFeatureRequirement: {}
 
 hints:
   DockerRequirement:
     dockerPull: filipbojovic/collect_kfolds
 
 inputs:
+  python_file2:
+    type: File
+    inputBinding:
+      position: 1
   array_of_outputs:
     type: string[]
     inputBinding:
