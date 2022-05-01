@@ -1,0 +1,15 @@
+secretGenerator:
+- name: ml-mysql-pass
+  literals:
+  - password=fika
+- name: ml-python-mysql-data
+  literals:
+  - USER=root
+  - DB_NAME=ml
+  - PORT=30008
+  - HOST='k8s-master.unic.kg.ac.rs'
+resources:
+  - mysql-initdb-storage-deployment.yaml
+  - mysql-deployment.yaml
+  - ml-python-storage-deployment.yaml
+  - ml-python-deployment.yaml

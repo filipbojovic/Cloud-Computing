@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ml-python
+  namespace: fika
+  labels:
+    app: ml-python
+spec:
+  ports:
+    - port: 8080
+      nodePort: 30009
+      targetPort: 8080
+  selector:
+    app: ml-python
+    tier: python
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-python
+  namespace: fika
+  labels:
+    app: ml-python
+spec:
+  selector:
+    matchLabels:
+      app: ml-python
+      tier: python
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ml-python
+        tier: python
+    spec:
+      containers:
+      - image: filipbojovic/ml-python:latest
+        name: ml-python
+        imagePullPolicy: "IfNotPresent"
+        env:
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: ml-python-mysql-data-868tkbchd9
+              key: USER
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ml-mysql-pass-td6b9b2c9c
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: ml-python-mysql-data-868tkbchd9
+              key: DB_NAME
+        - name: PORT
+          valueFrom:
+            secretKeyRef:
+              name: ml-python-mysql-data-868tkbchd9
+              key: PORT
+        - name: HOST
+          valueFrom:
+            secretKeyRef:
+              name: ml-python-mysql-data-868tkbchd9
+              key: HOST
+        ports:
+        - containerPort: 8080
+          name: ml-python
+        volumeMounts:
+        - name: ml-python-storage
+          mountPath: /app/storage
+      volumes:
+      - name: ml-python-storage
+        persistentVolumeClaim:
+          claimName: ml-python-storage-claim
