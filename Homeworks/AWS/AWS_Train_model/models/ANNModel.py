@@ -47,7 +47,7 @@ class ANN:
         
         self._create_model(len(data.columns) - num_of_outputs, num_of_outputs)
 
-        self.model.fit(X_train, y_train, batch_size = self._batch_size, epochs = self._num_of_epochs, verbose = 1)
+        self.model.fit(X_train, y_train, batch_size = self._batch_size, epochs = self._num_of_epochs, verbose = 0)
 
         metrics = self._evaluate_model(X_test, y_test)
 

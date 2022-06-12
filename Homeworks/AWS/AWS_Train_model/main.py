@@ -1,4 +1,5 @@
 import shutil
+from warnings import catch_warnings
 import config
 import os
 from database import Db
@@ -8,21 +9,24 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.post("/trainMlModel") # dekorator
-async def train_ml_model(dataset_name: str):
+async def train_ml_model(model_name: str):
     
-    optimizer = 'adam'
-    batch_size = 32
-    num_of_epochs = 100
-    activation = 'relu'
-    output_activation = 'linear'
+    try:
+        optimizer = 'adam'
+        batch_size = 32
+        num_of_epochs = 100
+        activation = 'relu'
+        output_activation = 'linear'
 
-    dataset_full_name = dataset_name +".csv"
-    annModel = ANN(optimizer, batch_size, num_of_epochs, activation, output_activation, dataset_full_name)
+        dataset_full_name = model_name +".csv"
+        annModel = ANN(optimizer, batch_size, num_of_epochs, activation, output_activation, dataset_full_name)
 
-    dataset_download_path = os.path.join(config.datasets_path, dataset_full_name)
-    Db.download_from_s3(dataset_download_path, dataset_full_name)
+        dataset_download_path = os.path.join(config.datasets_path, dataset_full_name)
+        Db.download_from_s3(dataset_download_path, dataset_full_name)
 
-    annModel.train_model(dataset_download_path, 1)
+        annModel.train_model(dataset_download_path, 1)
+    except Exception as e:
+        print("Request already fired by S3.")
 
 @app.post("/predictValues")
 async def predict_values(model_name: str):
